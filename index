@@ -539,24 +539,66 @@
       return box;
     }
 
-    // دالة الاتصال الجديدة (للتوافق مع GitHub)
-    async function fetchApi(action, params = {}) {
-      try {
-        const response = await fetch(SCRIPT_URL, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'text/plain;charset=utf-8',
-          },
-          body: JSON.stringify({ action: action, params: params })
+    // GitHub Pages -> Google Apps Script transport (avoids browser CORS fetch blocking)
+    // Apps Script doPost must accept a form field named "payload" and return an HTML
+    // response that calls window.top.postMessage({ channel, requestId, payload }, '*').
+    function fetchApi(action, params = {}) {
+      return new Promise((resolve, reject) => {
+        const requestId = 'ppe_' + Date.now() + '_' + Math.random().toString(36).slice(2);
+        const iframeName = 'ppe_api_frame_' + requestId.replace(/[^a-zA-Z0-9_]/g, '_');
+        const iframe = document.createElement('iframe');
+        iframe.name = iframeName;
+        iframe.title = 'PPE API transport';
+        iframe.style.display = 'none';
+
+        const form = document.createElement('form');
+        form.method = 'POST';
+        form.action = SCRIPT_URL;
+        form.target = iframeName;
+        form.acceptCharset = 'UTF-8';
+        form.style.display = 'none';
+
+        const payloadInput = document.createElement('input');
+        payloadInput.type = 'hidden';
+        payloadInput.name = 'payload';
+        payloadInput.value = JSON.stringify({
+          requestId: requestId,
+          action: action,
+          params: params
         });
-        const data = await response.json();
-        if (!data.success) {
-          throw new Error(data.error);
-        }
-        return data.result;
-      } catch (error) {
-        throw new Error(error.message || 'حدث خطأ في الاتصال بالخادم.');
-      }
+        form.appendChild(payloadInput);
+
+        let settled = false;
+        const cleanup = () => {
+          window.removeEventListener('message', onMessage);
+          clearTimeout(timeoutId);
+          form.remove();
+          iframe.remove();
+        };
+        const finish = (callback, value) => {
+          if (settled) return;
+          settled = true;
+          cleanup();
+          callback(value);
+        };
+        const onMessage = event => {
+          const message = event.data;
+          if (!message || message.channel !== 'PPE_API' || message.requestId !== requestId) return;
+          const data = message.payload;
+          if (!data || data.success !== true) {
+            finish(reject, new Error((data && data.error) || 'استجابة غير صحيحة من الخادم.'));
+            return;
+          }
+          finish(resolve, data.result);
+        };
+        const timeoutId = setTimeout(() => {
+          finish(reject, new Error('انتهت مهلة الاتصال. تأكد من نشر Google Apps Script كتطبيق ويب وإتاحة الوصول له.'));
+        }, 30000);
+
+        window.addEventListener('message', onMessage);
+        document.body.append(iframe, form);
+        form.submit();
+      });
     }
 
     function loadApp() {
