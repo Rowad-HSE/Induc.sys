@@ -1,0 +1,915 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <base target="_top">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>PPE Management System</title>
+  <style>
+    :root {
+      --navy: #142d27;
+      --green: #176b50;
+      --green2: #218461;
+      --bg: #f3f6f5;
+      --card: #fff;
+      --line: #dce6e1;
+      --text: #172923;
+      --muted: #687b72;
+      --soft: #eaf4ef;
+      --red: #b42318;
+      --gold: #986b12;
+      --shadow: 0 12px 30px rgba(20, 45, 39, .07);
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: Tahoma, Arial, sans-serif;
+    }
+    button, input, select { font: inherit; }
+    .hero {
+      background: linear-gradient(120deg, #102b24, #1a6049);
+      color: #fff;
+      padding: 26px 20px 32px;
+      border-bottom: 4px solid #8bc5a9;
+    }
+    .wrap {
+      width: min(1120px, 100% - 32px);
+      margin: auto;
+    }
+    .brandrow {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 24px;
+    }
+    .brand {
+      font-size: 12px;
+      letter-spacing: .5px;
+      color: #d6e8df;
+    }
+    .dept {
+      border: 1px solid #ffffff40;
+      border-radius: 30px;
+      padding: 8px 13px;
+      font-size: 12px;
+    }
+    .hero h1 {
+      margin: 0;
+      font-size: clamp(23px, 4vw, 32px);
+      line-height: 1.5;
+    }
+    .hero p {
+      margin: 7px 0 0;
+      color: #d6e8df;
+      font-size: 14px;
+    }
+    .main { padding: 24px 0 48px; }
+    .card {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 17px;
+      padding: 22px;
+      margin-bottom: 18px;
+      box-shadow: var(--shadow);
+    }
+    .heading {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 18px;
+    }
+    .num {
+      width: 38px;
+      height: 38px;
+      display: grid;
+      place-items: center;
+      background: var(--soft);
+      color: var(--green);
+      border-radius: 11px;
+      font-weight: bold;
+    }
+    .heading h2 {
+      font-size: 18px;
+      margin: 0;
+    }
+    .heading p {
+      margin: 5px 0 0;
+      color: var(--muted);
+      font-size: 12px;
+    }
+    .searchgrid {
+      display: grid;
+      grid-template-columns: minmax(220px, 1fr) minmax(220px, 1fr);
+      gap: 15px;
+    }
+    .field label {
+      display: block;
+      font-weight: bold;
+      font-size: 13px;
+      margin: 0 0 8px;
+    }
+    .field input, .field select {
+      width: 100%;
+      height: 47px;
+      border: 1px solid #cbd9d1;
+      border-radius: 10px;
+      background: #fff;
+      padding: 0 13px;
+      outline: none;
+      color: var(--text);
+    }
+    .field input:focus, .field select:focus {
+      border-color: var(--green2);
+      box-shadow: 0 0 0 3px #21846118;
+    }
+    .searchactions {
+      display: flex;
+      gap: 9px;
+      align-items: end;
+      flex-wrap: wrap;
+    }
+    .btn {
+      border: 0;
+      border-radius: 10px;
+      min-height: 44px;
+      padding: 11px 18px;
+      background: var(--green);
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+      transition: .15s;
+    }
+    .btn:hover { background: var(--green2); }
+    .btn:disabled {
+      opacity: .45;
+      cursor: not-allowed;
+    }
+    .btn.light {
+      background: #eaf2ee;
+      color: var(--navy);
+    }
+    .btn.light:hover { background: #dcebe3; }
+    .btn.ghost {
+      background: #fff;
+      color: var(--muted);
+      border: 1px solid var(--line);
+    }
+    .status {
+      margin-top: 14px;
+      padding: 11px 13px;
+      border-radius: 10px;
+      background: #f5f8f6;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.7;
+    }
+    .status.error { background: #fff0ee; color: var(--red); }
+    .status.good { background: #eaf7ef; color: #17643f; }
+    .hidden { display: none !important; }
+    .results-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 15px;
+    }
+    .results-head h2 { font-size: 18px; margin: 0; }
+    .count {
+      font-size: 12px;
+      color: var(--muted);
+      background: #f1f5f3;
+      padding: 7px 10px;
+      border-radius: 20px;
+    }
+    .results {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(265px, 1fr));
+      gap: 12px;
+    }
+    .emp {
+      border: 1px solid var(--line);
+      border-radius: 13px;
+      padding: 16px;
+      background: #fff;
+      transition: .15s;
+    }
+    .emp:hover {
+      border-color: #a5cbb8;
+      transform: translateY(-1px);
+    }
+    .empname {
+      font-size: 16px;
+      font-weight: bold;
+      margin-bottom: 8px;
+    }
+    .empmeta {
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.9;
+    }
+    .empfoot {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      margin-top: 12px;
+    }
+    .pill {
+      display: inline-block;
+      padding: 5px 9px;
+      border-radius: 20px;
+      background: #f0f5f2;
+      color: #52685e;
+      font-size: 11px;
+    }
+    .details {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(175px, 1fr));
+      gap: 10px;
+    }
+    .detail {
+      border: 1px solid var(--line);
+      border-radius: 11px;
+      padding: 13px;
+      background: #fbfcfb;
+      min-width: 0;
+    }
+    .dlabel {
+      font-size: 11px;
+      color: var(--muted);
+      margin-bottom: 7px;
+    }
+    .dvalue {
+      font-size: 14px;
+      font-weight: bold;
+      overflow-wrap: anywhere;
+    }
+    .subhead { font-size: 15px; margin: 24px 0 12px; }
+    .ppegrid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 10px;
+    }
+    .ppebox {
+      border: 1px solid var(--line);
+      border-radius: 11px;
+      padding: 13px;
+    }
+    .ppebox .itemname {
+      font-size: 12px;
+      color: var(--muted);
+      margin-bottom: 10px;
+    }
+    .state {
+      font-size: 12px;
+      font-weight: bold;
+      border-radius: 7px;
+      padding: 6px 9px;
+      display: inline-block;
+    }
+    .received { background: #e8f6ed; color: #17643f; }
+    .notreceived { background: #fff1e7; color: #a34b12; }
+    .sectionbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    .tablewrap { overflow-x: auto; }
+    table {
+      border-collapse: collapse;
+      width: 100%;
+      min-width: 680px;
+      font-size: 12px;
+    }
+    th, td {
+      text-align: right;
+      padding: 12px 10px;
+      border-bottom: 1px solid var(--line);
+      white-space: nowrap;
+    }
+    th {
+      background: #f0f5f2;
+      color: #40574d;
+    }
+    .empty {
+      text-align: center;
+      padding: 25px 12px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+    .accessbox {
+      border: 1px solid var(--line);
+      background: #fbfcfb;
+      border-radius: 13px;
+      padding: 16px;
+      margin-top: 14px;
+    }
+    .accessgrid {
+      display: grid;
+      grid-template-columns: 1fr 1fr auto;
+      gap: 12px;
+      align-items: end;
+    }
+    .approval {
+      margin-top: 13px;
+      padding: 11px 13px;
+      border-radius: 9px;
+      font-size: 13px;
+      font-weight: bold;
+    }
+    .approval.pending { background: #f5f6f6; color: #68756f; }
+    .approval.approved { background: #e5f6eb; color: #17643f; }
+    .approval.denied { background: #fff0ee; color: var(--red); }
+    .issuechoices {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(175px, 1fr));
+      gap: 10px;
+      margin-top: 14px;
+    }
+    .choice {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 14px;
+      border: 1px solid var(--line);
+      border-radius: 11px;
+      background: white;
+      cursor: pointer;
+    }
+    .choice input {
+      width: 18px;
+      height: 18px;
+      accent-color: var(--green);
+    }
+    .choice:has(input:checked) {
+      border-color: #79b99a;
+      background: #f2faf5;
+    }
+    .issuebottom {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-top: 18px;
+    }
+    .hint {
+      font-size: 12px;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+    .footer {
+      text-align: center;
+      color: #839188;
+      font-size: 11px;
+      padding: 10px 0 0;
+    }
+    @media(max-width: 650px) {
+      .wrap { width: min(100% - 20px, 1120px); }
+      .hero { padding: 20px 10px 25px; }
+      .brandrow { align-items: flex-start; }
+      .searchgrid, .accessgrid { grid-template-columns: 1fr; }
+      .card { padding: 16px; }
+      .searchactions .btn { flex: 1; }
+      .hero h1 { font-size: 23px; }
+      .heading h2 { font-size: 16px; }
+    }
+  </style>
+</head>
+<body>
+  <header class="hero">
+    <div class="wrap">
+      <div class="brandrow">
+        <div class="brand">ROWAD MODERN ENGINEERING</div>
+        <div class="dept">HSE DEPARTMENT</div>
+      </div>
+      <h1>الاستعلام عن بيانات الموظفين</h1>
+      <p>بيانات الموظف · حالة مهمات الوقاية · سجل الاستلام والصرف</p>
+    </div>
+  </header>
+  
+  <main class="wrap main">
+    <section class="card">
+      <div class="heading">
+        <div class="num">01</div>
+        <div>
+          <h2>البحث عن موظف</h2>
+          <p>حدد المشروع أولًا، ثم ابحث بالاسم أو الرقم القومي أو الكود الوظيفي.</p>
+        </div>
+      </div>
+      <div class="searchgrid">
+        <div class="field">
+          <label for="projectFilter">المشروع</label>
+          <select id="projectFilter">
+            <option value="all">كل المشاريع</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="searchText">بيانات البحث</label>
+          <input id="searchText" placeholder="اسم الموظف أو الرقم القومي أو الكود الوظيفي" autocomplete="off">
+        </div>
+      </div>
+      <div class="searchactions" style="margin-top:13px">
+        <button id="searchBtn" class="btn" onclick="searchEmployees()">بحث عن الموظف</button>
+        <button class="btn light" onclick="clearSearch()">مسح البحث</button>
+      </div>
+      <div id="searchStatus" class="status">جاري الاتصال بقاعدة البيانات...</div>
+    </section>
+
+    <section id="resultsPanel" class="card hidden">
+      <div class="results-head">
+        <h2>نتائج البحث</h2>
+        <span id="resultCount" class="count">0 نتيجة</span>
+      </div>
+      <div id="employeeResults" class="results"></div>
+    </section>
+
+    <section id="historyPanel" class="card hidden">
+      <div class="sectionbar">
+        <div class="heading" style="margin-bottom:15px">
+          <div class="num">02</div>
+          <div>
+            <h2>ملف الموظف</h2>
+            <p>البيانات الأساسية وحالة مهمات الوقاية وسجل الاستلام.</p>
+          </div>
+        </div>
+        <button class="btn light" onclick="closeEmployee()">إغلاق الملف</button>
+      </div>
+      <div id="employeeDetails" class="details"></div>
+      <h3 class="subhead">حالة مهمات الوقاية المسجلة في الريجيستر</h3>
+      <div id="initialPPE" class="ppegrid"></div>
+      <h3 class="subhead">سجل صرف المهمات الإضافية</h3>
+      <div id="historyContent" class="tablewrap">
+        <div class="empty">اختر موظفًا لعرض السجل.</div>
+      </div>
+      <div class="issuebottom">
+        <div class="hint">إذا كانت حالة المهمة DN في الريجيستر، فستظهر باعتبارها مستلمة.</div>
+        <button class="btn" onclick="openIssueForm()">＋ إضافة مهمات وقاية</button>
+      </div>
+    </section>
+
+    <section id="issuePanel" class="card hidden">
+      <div class="heading">
+        <div class="num">03</div>
+        <div>
+          <h2>إضافة مهمات وقاية</h2>
+          <p>اختر جهة الصرف، ثم تحقق من صلاحية المشروع قبل تحديد المهمات.</p>
+        </div>
+      </div>
+      <div id="issueEmployeeSummary" class="status"></div>
+      <div class="accessbox">
+        <div class="accessgrid">
+          <div class="field">
+            <label for="issuingProject">المشروع الذي سيتم الصرف منه</label>
+            <select id="issuingProject">
+              <option value="">اختر مشروع الصرف</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="projectPassword">كلمة مرور المشروع</label>
+            <input id="projectPassword" type="password" placeholder="أدخل كلمة المرور" autocomplete="new-password">
+          </div>
+          <button id="verifyBtn" class="btn" onclick="verifyProject()">تأكد من الصلاحية</button>
+        </div>
+        <div id="approvalStatus" class="approval pending">بانتظار التحقق من صلاحية المشروع.</div>
+      </div>
+      <div id="itemsSection" class="hidden">
+        <h3 class="subhead">حدد المهمات المطلوب تسليمها</h3>
+        <div id="issueItems" class="issuechoices"></div>
+        <div class="issuebottom">
+          <div class="hint">راجع اسم الموظف والمشروع والمهمات قبل تأكيد التسجيل.</div>
+          <button id="submitIssueBtn" class="btn" onclick="submitIssue()">تأكيد تسجيل الصرف</button>
+        </div>
+      </div>
+      <div id="issueStatus" class="status hidden"></div>
+    </section>
+
+    <div class="footer">Rowad Modern Engineering · HSE Department · PPE & Employee Records</div>
+  </main>
+
+  <script>
+    let appInfo = null, selectedEmployee = null, approvedProject = '', isSaving = false;
+    
+    // رابط النشر الخاص بالاسكريبت
+    const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxoQcMYAQNy8pkMiBfuYF6tYsDL5OgppNCqKkrFDgz51iyZpBb9dLv2sPTZdL240kl2/exec';
+    
+    const PPE_ITEMS = [
+      ['Safety Shoes', 'حذاء السلامة'],
+      ['Vest', 'الفيست'],
+      ['Safety Helmet', 'خوذة السلامة'],
+      ['Safety Glasses', 'نظارة السلامة'],
+      ['Gloves', 'الجوانتي']
+    ];
+
+    function el(id) { return document.getElementById(id); }
+
+    function setStatus(id, message, type) {
+      const node = el(id);
+      node.textContent = message;
+      node.className = 'status' + (type ? ' ' + type : '');
+    }
+
+    function safeText(v) { return String(v == null ? '' : v); }
+
+    function received(v) {
+      const s = safeText(v).trim().toUpperCase();
+      return ['DN', 'YES', 'Y', 'TRUE', '1', 'RECEIVED', 'استلم', 'تم الاستلام', 'نعم'].includes(s);
+    }
+
+    function itemState(v) {
+      return '<span class="state ' + (received(v) ? 'received' : 'notreceived') + '">' + (received(v) ? 'مستلم' : 'لم يستلم') + '</span>';
+    }
+
+    function makeDetail(label, value) {
+      const box = document.createElement('div');
+      box.className = 'detail';
+      const l = document.createElement('div');
+      l.className = 'dlabel';
+      l.textContent = label;
+      const v = document.createElement('div');
+      v.className = 'dvalue';
+      v.textContent = value || '—';
+      box.append(l, v);
+      return box;
+    }
+
+    // دالة الاتصال الجديدة (للتوافق مع GitHub)
+    async function fetchApi(action, params = {}) {
+      try {
+        const response = await fetch(SCRIPT_URL, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'text/plain;charset=utf-8',
+          },
+          body: JSON.stringify({ action: action, params: params })
+        });
+        const data = await response.json();
+        if (!data.success) {
+          throw new Error(data.error);
+        }
+        return data.result;
+      } catch (error) {
+        throw new Error(error.message || 'حدث خطأ في الاتصال بالخادم.');
+      }
+    }
+
+    function loadApp() {
+      fetchApi('getPPEAppInfo')
+        .then(info => {
+          appInfo = info;
+          (info.projects || []).forEach(project => {
+            let o = document.createElement('option');
+            o.value = project;
+            o.textContent = project;
+            el('projectFilter').appendChild(o);
+            let i = document.createElement('option');
+            i.value = project;
+            i.textContent = project;
+            el('issuingProject').appendChild(i);
+          });
+          renderIssueItems();
+          setStatus('searchStatus', 'تم الاتصال بقاعدة البيانات. حدد المشروع وابدأ البحث.');
+        })
+        .catch(err => setStatus('searchStatus', 'تعذر الاتصال بالخادم: ' + err.message, 'error'));
+    }
+
+    function searchEmployees() {
+      const q = el('searchText').value.trim();
+      const project = el('projectFilter').value;
+      el('searchBtn').disabled = true;
+      setStatus('searchStatus', 'جاري البحث عن الموظفين...');
+      
+      fetchApi('searchPPEEmployees', { searchText: q, projectFilter: project })
+        .then(result => {
+          el('searchBtn').disabled = false;
+          el('historyPanel').classList.add('hidden');
+          el('issuePanel').classList.add('hidden');
+          el('resultsPanel').classList.remove('hidden');
+          const box = el('employeeResults');
+          box.replaceChildren();
+          
+          if (!result.success) {
+            setStatus('searchStatus', result.message, 'error');
+            return;
+          }
+          
+          el('resultCount').textContent = result.count + ' نتيجة';
+          
+          if (!result.employees.length) {
+            box.innerHTML = '<div class="empty">لا توجد نتائج مطابقة. جرّب تعديل بيانات البحث أو اختيار مشروع آخر.</div>';
+            setStatus('searchStatus', 'لم يتم العثور على موظفين مطابقين.');
+            return;
+          }
+          
+          result.employees.forEach(emp => {
+            const card = document.createElement('article');
+            card.className = 'emp';
+            const name = document.createElement('div');
+            name.className = 'empname';
+            name.textContent = emp.name;
+            const meta = document.createElement('div');
+            meta.className = 'empmeta';
+            meta.textContent = 'المشروع الأصلي: ' + (emp.originalProject || '—') + '\nالمهنة: ' + (emp.jobTitle || '—') + '\nالرقم التعريفي: ' + (emp.employeeId || '—');
+            meta.style.whiteSpace = 'pre-line';
+            const foot = document.createElement('div');
+            foot.className = 'empfoot';
+            const pill = document.createElement('span');
+            pill.className = 'pill';
+            pill.textContent = emp.company || 'بيانات الموظف';
+            const btn = document.createElement('button');
+            btn.className = 'btn';
+            btn.textContent = 'عرض الملف';
+            btn.addEventListener('click', () => showEmployee(emp));
+            foot.append(pill, btn);
+            card.append(name, meta, foot);
+            box.appendChild(card);
+          });
+          
+          setStatus('searchStatus', 'تم العثور على ' + result.count + ' نتيجة' + (result.count === 100 ? ' — تم عرض أول 100 نتيجة.' : '.'));
+        })
+        .catch(err => {
+          el('searchBtn').disabled = false;
+          setStatus('searchStatus', 'فشل البحث: ' + err.message, 'error');
+        });
+    }
+
+    function clearSearch() {
+      el('searchText').value = '';
+      el('projectFilter').value = 'all';
+      el('resultsPanel').classList.add('hidden');
+      el('historyPanel').classList.add('hidden');
+      el('issuePanel').classList.add('hidden');
+      selectedEmployee = null;
+      setStatus('searchStatus', 'تم مسح البحث. حدد المشروع واكتب بيانات الموظف للبحث من جديد.');
+      el('searchText').focus();
+    }
+
+    function showEmployee(emp) {
+      selectedEmployee = emp;
+      el('issuePanel').classList.add('hidden');
+      el('historyPanel').classList.remove('hidden');
+      
+      const details = el('employeeDetails');
+      details.replaceChildren();
+      
+      [['اسم الموظف', emp.name], ['الرقم التعريفي', emp.employeeId], ['الرقم القومي / الكود الوظيفي', emp.nationalIdOrCode], ['المشروع الأصلي', emp.originalProject], ['الشركة', emp.company], ['المهنة', emp.jobTitle], ['تصنيف المهنة', emp.jobCategory], ['رقم الهاتف', emp.phone], ['تاريخ التسجيل الأول', emp.initialIssueTimestamp]].forEach(p => details.appendChild(makeDetail(p[0], p[1])));
+      
+      const ppe = el('initialPPE');
+      ppe.replaceChildren();
+      
+      PPE_ITEMS.forEach(([key, label]) => {
+        const box = document.createElement('div');
+        box.className = 'ppebox';
+        const n = document.createElement('div');
+        n.className = 'itemname';
+        n.textContent = label;
+        const val = document.createElement('div');
+        const value = emp.initialPPE ? emp.initialPPE[{ 'Safety Shoes': 'safetyShoes', 'Vest': 'vest', 'Safety Helmet': 'safetyHelmet', 'Safety Glasses': 'safetyGlasses', 'Gloves': 'gloves' }[key]] : '';
+        val.innerHTML = itemState(value);
+        box.append(n, val);
+        ppe.appendChild(box);
+      });
+      
+      el('historyContent').innerHTML = '<div class="empty">جاري تحميل سجل الصرف...</div>';
+      
+      fetchApi('getPPEEmployeeHistory', { employeeId: emp.employeeId, employeeName: emp.name, originalProject: emp.originalProject })
+        .then(renderHistory)
+        .catch(err => {
+          el('historyContent').textContent = 'تعذر تحميل السجل: ' + err.message;
+        });
+        
+      el('historyPanel').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
+    function renderHistory(records) {
+      const c = el('historyContent');
+      c.replaceChildren();
+      
+      if (!records || !records.length) {
+        c.innerHTML = '<div class="empty">لا توجد عمليات صرف إضافية مسجلة لهذا الموظف.</div>';
+        return;
+      }
+      
+      const headers = ['Timestamp', 'Issuing Project', 'Safety Shoes', 'Vest', 'Safety Helmet', 'Safety Glasses', 'Gloves', 'Recorded By'];
+      const labels = {
+        'Timestamp': 'التاريخ والوقت',
+        'Issuing Project': 'مشروع الصرف',
+        'Safety Shoes': 'حذاء السلامة',
+        'Vest': 'الفيست',
+        'Safety Helmet': 'الخوذة',
+        'Safety Glasses': 'النظارة',
+        'Gloves': 'الجوانتي',
+        'Recorded By': 'مسجل العملية'
+      };
+      
+      const table = document.createElement('table');
+      const thead = document.createElement('thead');
+      const trh = document.createElement('tr');
+      
+      headers.forEach(h => {
+        const th = document.createElement('th');
+        th.textContent = labels[h];
+        trh.appendChild(th);
+      });
+      
+      thead.appendChild(trh);
+      table.appendChild(thead);
+      
+      const body = document.createElement('tbody');
+      
+      records.forEach(r => {
+        const tr = document.createElement('tr');
+        headers.forEach(h => {
+          const td = document.createElement('td');
+          td.textContent = safeText(r[h]) || '—';
+          tr.appendChild(td);
+        });
+        body.appendChild(tr);
+      });
+      
+      table.appendChild(body);
+      c.appendChild(table);
+    }
+
+    function closeEmployee() {
+      el('historyPanel').classList.add('hidden');
+      closeIssueForm();
+    }
+
+    function renderIssueItems() {
+      const c = el('issueItems');
+      c.replaceChildren();
+      
+      PPE_ITEMS.forEach(([key, label], i) => {
+        const l = document.createElement('label');
+        l.className = 'choice';
+        const cb = document.createElement('input');
+        cb.type = 'checkbox';
+        cb.id = 'issueItem' + i;
+        cb.value = key;
+        cb.disabled = true;
+        const span = document.createElement('span');
+        span.textContent = label;
+        l.append(cb, span);
+        c.appendChild(l);
+      });
+    }
+
+    function openIssueForm() {
+      if (!selectedEmployee) return;
+      closeIssueForm(false);
+      el('issueEmployeeSummary').textContent = 'الموظف: ' + selectedEmployee.name + ' | الكود: ' + selectedEmployee.employeeId + ' | المشروع الأصلي: ' + selectedEmployee.originalProject;
+      el('issuePanel').classList.remove('hidden');
+      el('issuePanel').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
+    function closeIssueForm(hide = true) {
+      if (hide) el('issuePanel').classList.add('hidden');
+      approvedProject = '';
+      el('projectPassword').value = '';
+      el('issuingProject').value = '';
+      el('itemsSection').classList.add('hidden');
+      el('approvalStatus').className = 'approval pending';
+      el('approvalStatus').textContent = 'بانتظار التحقق من صلاحية المشروع.';
+      el('issueStatus').classList.add('hidden');
+      el('verifyBtn').disabled = false;
+      el('verifyBtn').textContent = 'تأكد من الصلاحية';
+      document.querySelectorAll('#issueItems input').forEach(cb => {
+        cb.checked = false;
+        cb.disabled = true;
+      });
+    }
+
+    function verifyProject() {
+      const project = el('issuingProject').value;
+      const password = el('projectPassword').value;
+      
+      if (!project || !password) {
+        el('approvalStatus').className = 'approval denied';
+        el('approvalStatus').textContent = 'اختر مشروع الصرف وأدخل كلمة المرور أولًا.';
+        return;
+      }
+      
+      el('verifyBtn').disabled = true;
+      el('verifyBtn').textContent = 'جاري التحقق...';
+      el('itemsSection').classList.add('hidden');
+      approvedProject = '';
+      
+      fetchApi('validatePPEProjectAccess', { projectName: project, password: password })
+        .then(result => {
+          el('verifyBtn').disabled = false;
+          el('verifyBtn').textContent = 'إعادة التحقق';
+          approvedProject = result.project;
+          el('approvalStatus').className = 'approval approved';
+          el('approvalStatus').textContent = 'APPROVED — تم التحقق من صلاحية الصرف للمشروع: ' + result.project;
+          el('itemsSection').classList.remove('hidden');
+          document.querySelectorAll('#issueItems input').forEach(cb => cb.disabled = false);
+          setStatus('issueStatus', 'تم اعتماد صلاحية المشروع. اختر المهمات ثم أكد التسجيل.', 'good');
+          el('issueStatus').classList.remove('hidden');
+        })
+        .catch(err => {
+          el('verifyBtn').disabled = false;
+          el('verifyBtn').textContent = 'تأكد من الصلاحية';
+          el('approvalStatus').className = 'approval denied';
+          el('approvalStatus').textContent = 'غير معتمد — ' + err.message;
+          approvedProject = '';
+        });
+    }
+
+    function submitIssue() {
+      if (isSaving) return;
+      if (!selectedEmployee) {
+        setStatus('issueStatus', 'اختار موظفًا أولًا.', 'error');
+        el('issueStatus').classList.remove('hidden');
+        return;
+      }
+      
+      const project = el('issuingProject').value;
+      const password = el('projectPassword').value;
+      
+      if (!approvedProject || approvedProject !== project) {
+        setStatus('issueStatus', 'يجب التحقق من صلاحية المشروع أولًا.', 'error');
+        el('issueStatus').classList.remove('hidden');
+        return;
+      }
+      
+      const items = {};
+      document.querySelectorAll('#issueItems input').forEach(cb => items[cb.value] = cb.checked);
+      
+      if (!Object.values(items).some(Boolean)) {
+        setStatus('issueStatus', 'حدد مهمة واحدة على الأقل.', 'error');
+        el('issueStatus').classList.remove('hidden');
+        return;
+      }
+      
+      isSaving = true;
+      el('submitIssueBtn').disabled = true;
+      el('submitIssueBtn').textContent = 'جاري تسجيل الصرف...';
+      
+      fetchApi('recordAdditionalPPEIssue', {
+          request: {
+            employee: selectedEmployee,
+            issuingProject: project,
+            projectPassword: password,
+            items: items
+          }
+        })
+        .then(result => {
+          isSaving = false;
+          el('submitIssueBtn').disabled = false;
+          el('submitIssueBtn').textContent = 'تأكيد تسجيل الصرف';
+          setStatus('issueStatus', result.message + ' رقم العملية: ' + result.transactionId, 'good');
+          el('issueStatus').classList.remove('hidden');
+          el('projectPassword').value = '';
+          approvedProject = '';
+          el('approvalStatus').className = 'approval pending';
+          el('approvalStatus').textContent = 'تم التسجيل. تحقق مرة أخرى قبل تسجيل عملية جديدة.';
+          el('itemsSection').classList.add('hidden');
+          
+          const savedEmployee = selectedEmployee;
+          showEmployee(savedEmployee);
+          
+          el('issuePanel').classList.remove('hidden');
+          el('issuePanel').scrollIntoView({ behavior: 'smooth', block: 'start' });
+          setStatus('issueStatus', result.message + ' رقم العملية: ' + result.transactionId, 'good');
+          el('issueStatus').classList.remove('hidden');
+        })
+        .catch(err => {
+          isSaving = false;
+          el('submitIssueBtn').disabled = false;
+          el('submitIssueBtn').textContent = 'تأكيد تسجيل الصرف';
+          setStatus('issueStatus', 'تعذر تسجيل الصرف: ' + err.message, 'error');
+          el('issueStatus').classList.remove('hidden');
+        });
+    }
+
+    el('searchText').addEventListener('keydown', e => {
+      if (e.key === 'Enter') searchEmployees();
+    });
+    
+    el('issuingProject').addEventListener('change', () => {
+      approvedProject = '';
+      el('itemsSection').classList.add('hidden');
+      el('approvalStatus').className = 'approval pending';
+      el('approvalStatus').textContent = 'تم تغيير المشروع؛ يجب التحقق من الصلاحية مرة أخرى.';
+    });
+    
+    el('projectPassword').addEventListener('input', () => {
+      if (approvedProject) {
+        approvedProject = '';
+        el('itemsSection').classList.add('hidden');
+        el('approvalStatus').className = 'approval pending';
+        el('approvalStatus').textContent = 'تم تعديل كلمة المرور؛ أعد التحقق من الصلاحية.';
+      }
+    });
+
+    loadApp();
+  </script>
+</body>
+</html>
