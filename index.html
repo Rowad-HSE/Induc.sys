@@ -4,381 +4,87 @@
   <base target="_top">
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>PPE Management System</title>
   <style>
-    :root {
-      --navy: #142d27;
-      --green: #176b50;
-      --green2: #218461;
-      --bg: #f3f6f5;
-      --card: #fff;
-      --line: #dce6e1;
-      --text: #172923;
-      --muted: #687b72;
-      --soft: #eaf4ef;
-      --red: #b42318;
-      --gold: #986b12;
-      --shadow: 0 12px 30px rgba(20, 45, 39, .07);
-    }
+    :root { --navy: #142d27; --green: #176b50; --green2: #218461; --bg: #f3f6f5; --card: #fff; --line: #dce6e1; --text: #172923; --muted: #687b72; --soft: #eaf4ef; --red: #b42318; --shadow: 0 12px 30px rgba(20, 45, 39, .07); }
     * { box-sizing: border-box; }
-    body {
-      margin: 0;
-      background: var(--bg);
-      color: var(--text);
-      font-family: Tahoma, Arial, sans-serif;
-    }
-    button, input, select { font: inherit; }
-    .hero {
-      background: linear-gradient(120deg, #102b24, #1a6049);
-      color: #fff;
-      padding: 26px 20px 32px;
-      border-bottom: 4px solid #8bc5a9;
-    }
-    .wrap {
-      width: min(1120px, 100% - 32px);
-      margin: auto;
-    }
-    .brandrow {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 12px;
-      margin-bottom: 24px;
-    }
-    .brand {
-      font-size: 12px;
-      letter-spacing: .5px;
-      color: #d6e8df;
-    }
-    .dept {
-      border: 1px solid #ffffff40;
-      border-radius: 30px;
-      padding: 8px 13px;
-      font-size: 12px;
-    }
-    .hero h1 {
-      margin: 0;
-      font-size: clamp(23px, 4vw, 32px);
-      line-height: 1.5;
-    }
-    .hero p {
-      margin: 7px 0 0;
-      color: #d6e8df;
-      font-size: 14px;
-    }
+    body { margin: 0; background: var(--bg); color: var(--text); font-family: Tahoma, Arial, sans-serif; }
+    button, input, select, textarea { font: inherit; }
+    .hero { background: linear-gradient(120deg, #102b24, #1a6049); color: #fff; padding: 26px 20px 32px; border-bottom: 4px solid #8bc5a9; }
+    .wrap { width: min(1120px, 100% - 32px); margin: auto; }
+    .brandrow { display: flex; justify-content: space-between; align-items: center; gap: 12px; margin-bottom: 24px; }
+    .brand { font-size: 12px; letter-spacing: .5px; color: #d6e8df; }
+    .dept { border: 1px solid #ffffff40; border-radius: 30px; padding: 8px 13px; font-size: 12px; }
+    .hero h1 { margin: 0; font-size: clamp(23px, 4vw, 32px); line-height: 1.5; }
+    .hero p { margin: 7px 0 0; color: #d6e8df; font-size: 14px; }
     .main { padding: 24px 0 48px; }
-    .card {
-      background: var(--card);
-      border: 1px solid var(--line);
-      border-radius: 17px;
-      padding: 22px;
-      margin-bottom: 18px;
-      box-shadow: var(--shadow);
-    }
-    .heading {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      margin-bottom: 18px;
-    }
-    .num {
-      width: 38px;
-      height: 38px;
-      display: grid;
-      place-items: center;
-      background: var(--soft);
-      color: var(--green);
-      border-radius: 11px;
-      font-weight: bold;
-    }
-    .heading h2 {
-      font-size: 18px;
-      margin: 0;
-    }
-    .heading p {
-      margin: 5px 0 0;
-      color: var(--muted);
-      font-size: 12px;
-    }
-    .searchgrid {
-      display: grid;
-      grid-template-columns: minmax(220px, 1fr) minmax(220px, 1fr);
-      gap: 15px;
-    }
-    .field label {
-      display: block;
-      font-weight: bold;
-      font-size: 13px;
-      margin: 0 0 8px;
-    }
-    .field input, .field select {
-      width: 100%;
-      height: 47px;
-      border: 1px solid #cbd9d1;
-      border-radius: 10px;
-      background: #fff;
-      padding: 0 13px;
-      outline: none;
-      color: var(--text);
-    }
-    .field input:focus, .field select:focus {
-      border-color: var(--green2);
-      box-shadow: 0 0 0 3px #21846118;
-    }
-    .searchactions {
-      display: flex;
-      gap: 9px;
-      align-items: end;
-      flex-wrap: wrap;
-    }
-    .btn {
-      border: 0;
-      border-radius: 10px;
-      min-height: 44px;
-      padding: 11px 18px;
-      background: var(--green);
-      color: white;
-      font-weight: bold;
-      cursor: pointer;
-      transition: .15s;
-    }
+    .card { background: var(--card); border: 1px solid var(--line); border-radius: 17px; padding: 22px; margin-bottom: 18px; box-shadow: var(--shadow); }
+    .heading { display: flex; align-items: center; gap: 12px; margin-bottom: 18px; }
+    .num { width: 38px; height: 38px; display: grid; place-items: center; background: var(--soft); color: var(--green); border-radius: 11px; font-weight: bold; }
+    .heading h2 { font-size: 18px; margin: 0; }
+    .heading p { margin: 5px 0 0; color: var(--muted); font-size: 12px; }
+    .searchgrid { display: grid; grid-template-columns: minmax(220px, 1fr) minmax(220px, 1fr); gap: 15px; }
+    .field label { display: block; font-weight: bold; font-size: 13px; margin: 0 0 8px; }
+    .field input, .field select, .field textarea { width: 100%; border: 1px solid #cbd9d1; border-radius: 10px; background: #fff; padding: 13px; outline: none; color: var(--text); }
+    .field input, .field select { height: 47px; }
+    .field input:disabled, .field select:disabled { background: #f0f3f1; cursor: not-allowed; font-weight: bold; color: #40574d; }
+    .field input:focus, .field select:focus, .field textarea:focus { border-color: var(--green2); box-shadow: 0 0 0 3px #21846118; }
+    .searchactions { display: flex; gap: 9px; align-items: end; flex-wrap: wrap; margin-top: 13px; }
+    .btn { border: 0; border-radius: 10px; min-height: 44px; padding: 11px 18px; background: var(--green); color: white; font-weight: bold; cursor: pointer; transition: .15s; }
     .btn:hover { background: var(--green2); }
-    .btn:disabled {
-      opacity: .45;
-      cursor: not-allowed;
-    }
-    .btn.light {
-      background: #eaf2ee;
-      color: var(--navy);
-    }
+    .btn:disabled { opacity: .45; cursor: not-allowed; }
+    .btn.light { background: #eaf2ee; color: var(--navy); }
     .btn.light:hover { background: #dcebe3; }
-    .btn.ghost {
-      background: #fff;
-      color: var(--muted);
-      border: 1px solid var(--line);
-    }
-    .status {
-      margin-top: 14px;
-      padding: 11px 13px;
-      border-radius: 10px;
-      background: #f5f8f6;
-      color: var(--muted);
-      font-size: 13px;
-      line-height: 1.7;
-    }
+    .btn.red { background: #dc3545; color: white; }
+    .btn.red:hover { background: #c82333; }
+    .btn.ghost-red { background: transparent; color: #dc3545; border: 1px solid #dc3545; padding: 6px 12px; font-size: 11px; min-height: unset; border-radius: 6px;}
+    .btn.ghost-red:hover { background: #dc3545; color: white;}
+    .status { margin-top: 14px; padding: 11px 13px; border-radius: 10px; background: #f5f8f6; color: var(--muted); font-size: 13px; line-height: 1.7; }
     .status.error { background: #fff0ee; color: var(--red); }
     .status.good { background: #eaf7ef; color: #17643f; }
     .hidden { display: none !important; }
-    .results-head {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 10px;
-      flex-wrap: wrap;
-      margin-bottom: 15px;
-    }
+    .results-head { display: flex; justify-content: space-between; align-items: center; gap: 10px; flex-wrap: wrap; margin-bottom: 15px; }
     .results-head h2 { font-size: 18px; margin: 0; }
-    .count {
-      font-size: 12px;
-      color: var(--muted);
-      background: #f1f5f3;
-      padding: 7px 10px;
-      border-radius: 20px;
-    }
-    .results {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(265px, 1fr));
-      gap: 12px;
-    }
-    .emp {
-      border: 1px solid var(--line);
-      border-radius: 13px;
-      padding: 16px;
-      background: #fff;
-      transition: .15s;
-    }
-    .emp:hover {
-      border-color: #a5cbb8;
-      transform: translateY(-1px);
-    }
-    .empname {
-      font-size: 16px;
-      font-weight: bold;
-      margin-bottom: 8px;
-    }
-    .empmeta {
-      color: var(--muted);
-      font-size: 12px;
-      line-height: 1.9;
-    }
-    .empfoot {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 8px;
-      margin-top: 12px;
-    }
-    .pill {
-      display: inline-block;
-      padding: 5px 9px;
-      border-radius: 20px;
-      background: #f0f5f2;
-      color: #52685e;
-      font-size: 11px;
-    }
-    .details {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(175px, 1fr));
-      gap: 10px;
-    }
-    .detail {
-      border: 1px solid var(--line);
-      border-radius: 11px;
-      padding: 13px;
-      background: #fbfcfb;
-      min-width: 0;
-    }
-    .dlabel {
-      font-size: 11px;
-      color: var(--muted);
-      margin-bottom: 7px;
-    }
-    .dvalue {
-      font-size: 14px;
-      font-weight: bold;
-      overflow-wrap: anywhere;
-    }
-    .subhead { font-size: 15px; margin: 24px 0 12px; }
-    .ppegrid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-      gap: 10px;
-    }
-    .ppebox {
-      border: 1px solid var(--line);
-      border-radius: 11px;
-      padding: 13px;
-    }
-    .ppebox .itemname {
-      font-size: 12px;
-      color: var(--muted);
-      margin-bottom: 10px;
-    }
-    .state {
-      font-size: 12px;
-      font-weight: bold;
-      border-radius: 7px;
-      padding: 6px 9px;
-      display: inline-block;
-    }
+    .count { font-size: 12px; color: var(--muted); background: #f1f5f3; padding: 7px 10px; border-radius: 20px; }
+    .results { display: grid; grid-template-columns: repeat(auto-fit, minmax(265px, 1fr)); gap: 12px; }
+    .emp { border: 1px solid var(--line); border-radius: 13px; padding: 16px; background: #fff; transition: .15s; }
+    .emp:hover { border-color: #a5cbb8; transform: translateY(-1px); }
+    .empname { font-size: 16px; font-weight: bold; margin-bottom: 8px; }
+    .empmeta { color: var(--muted); font-size: 12px; line-height: 1.9; }
+    .empfoot { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-top: 12px; }
+    .pill { display: inline-block; padding: 5px 9px; border-radius: 20px; background: #f0f5f2; color: #52685e; font-size: 11px; }
+    .details { display: grid; grid-template-columns: repeat(auto-fit, minmax(175px, 1fr)); gap: 10px; }
+    .detail { border: 1px solid var(--line); border-radius: 11px; padding: 13px; background: #fbfcfb; }
+    .dlabel { font-size: 11px; color: var(--muted); margin-bottom: 7px; }
+    .dvalue { font-size: 14px; font-weight: bold; overflow-wrap: anywhere; }
+    .subhead { font-size: 15px; margin: 24px 0 12px; padding-bottom: 8px; border-bottom: 2px solid #eaf2ee; display: inline-block;}
+    .subhead.red { border-bottom-color: #fdf1f2; color: #dc3545;}
+    .ppegrid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 10px; }
+    .ppebox { border: 1px solid var(--line); border-radius: 11px; padding: 13px; }
+    .ppebox .itemname { font-size: 12px; color: var(--muted); margin-bottom: 10px; }
+    .state { font-size: 12px; font-weight: bold; border-radius: 7px; padding: 6px 9px; display: inline-block; }
     .received { background: #e8f6ed; color: #17643f; }
     .notreceived { background: #fff1e7; color: #a34b12; }
-    .sectionbar {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 10px;
-      flex-wrap: wrap;
-    }
-    .tablewrap { overflow-x: auto; }
-    table {
-      border-collapse: collapse;
-      width: 100%;
-      min-width: 680px;
-      font-size: 12px;
-    }
-    th, td {
-      text-align: right;
-      padding: 12px 10px;
-      border-bottom: 1px solid var(--line);
-      white-space: nowrap;
-    }
-    th {
-      background: #f0f5f2;
-      color: #40574d;
-    }
-    .empty {
-      text-align: center;
-      padding: 25px 12px;
-      color: var(--muted);
-      font-size: 13px;
-    }
-    .accessbox {
-      border: 1px solid var(--line);
-      background: #fbfcfb;
-      border-radius: 13px;
-      padding: 16px;
-      margin-top: 14px;
-    }
-    .accessgrid {
-      display: grid;
-      grid-template-columns: 1fr 1fr auto;
-      gap: 12px;
-      align-items: end;
-    }
-    .approval {
-      margin-top: 13px;
-      padding: 11px 13px;
-      border-radius: 9px;
-      font-size: 13px;
-      font-weight: bold;
-    }
+    .sectionbar { display: flex; justify-content: space-between; align-items: center; gap: 10px; flex-wrap: wrap; }
+    .tablewrap { overflow-x: auto; margin-bottom: 20px;}
+    table { border-collapse: collapse; width: 100%; min-width: 680px; font-size: 12px; }
+    th, td { text-align: right; padding: 12px 10px; border-bottom: 1px solid var(--line); white-space: nowrap; }
+    th { background: #f0f5f2; color: #40574d; }
+    .empty { text-align: center; padding: 25px 12px; color: var(--muted); font-size: 13px; background: #fbfcfb; border-radius: 10px; border: 1px dashed var(--line); }
+    .accessbox { border: 1px solid var(--line); background: #fbfcfb; border-radius: 13px; padding: 16px; margin-top: 14px; }
+    .accessgrid { display: grid; grid-template-columns: 1fr 1fr auto; gap: 12px; align-items: end; }
+    .approval { margin-top: 13px; padding: 11px 13px; border-radius: 9px; font-size: 13px; font-weight: bold; }
     .approval.pending { background: #f5f6f6; color: #68756f; }
     .approval.approved { background: #e5f6eb; color: #17643f; }
     .approval.denied { background: #fff0ee; color: var(--red); }
-    .issuechoices {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(175px, 1fr));
-      gap: 10px;
-      margin-top: 14px;
-    }
-    .choice {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      padding: 14px;
-      border: 1px solid var(--line);
-      border-radius: 11px;
-      background: white;
-      cursor: pointer;
-    }
-    .choice input {
-      width: 18px;
-      height: 18px;
-      accent-color: var(--green);
-    }
-    .choice:has(input:checked) {
-      border-color: #79b99a;
-      background: #f2faf5;
-    }
-    .issuebottom {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 12px;
-      flex-wrap: wrap;
-      margin-top: 18px;
-    }
-    .hint {
-      font-size: 12px;
-      color: var(--muted);
-      line-height: 1.7;
-    }
-    .footer {
-      text-align: center;
-      color: #839188;
-      font-size: 11px;
-      padding: 10px 0 0;
-    }
+    .issuechoices { display: grid; grid-template-columns: repeat(auto-fit, minmax(175px, 1fr)); gap: 10px; margin-top: 14px; }
+    .choice { display: flex; align-items: center; gap: 10px; padding: 14px; border: 1px solid var(--line); border-radius: 11px; background: white; cursor: pointer; }
+    .choice input { width: 18px; height: 18px; accent-color: var(--green); }
+    .choice:has(input:checked) { border-color: #79b99a; background: #f2faf5; }
+    .issuebottom { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; margin-top: 18px; }
+    .hint { font-size: 12px; color: var(--muted); line-height: 1.7; }
+    .footer { text-align: center; color: #839188; font-size: 11px; padding: 10px 0 0; }
     @media(max-width: 650px) {
-      .wrap { width: min(100% - 20px, 1120px); }
-      .hero { padding: 20px 10px 25px; }
-      .brandrow { align-items: flex-start; }
       .searchgrid, .accessgrid { grid-template-columns: 1fr; }
-      .card { padding: 16px; }
-      .searchactions .btn { flex: 1; }
-      .hero h1 { font-size: 23px; }
-      .heading h2 { font-size: 16px; }
     }
   </style>
 </head>
@@ -390,7 +96,7 @@
         <div class="dept">HSE DEPARTMENT</div>
       </div>
       <h1>الاستعلام عن بيانات الموظفين</h1>
-      <p>بيانات الموظف · حالة مهمات الوقاية · سجل الاستلام والصرف</p>
+      <p>بيانات الموظف · مهمات الوقاية · سجل المخالفات</p>
     </div>
   </header>
   
@@ -400,22 +106,14 @@
         <div class="num">01</div>
         <div>
           <h2>البحث عن موظف</h2>
-          <p>حدد المشروع أولًا، ثم ابحث بالاسم أو الرقم القومي أو الكود الوظيفي.</p>
+          <p>حدد المشروع أولًا، ثم ابحث بالاسم أو الرقم القومي.</p>
         </div>
       </div>
       <div class="searchgrid">
-        <div class="field">
-          <label for="projectFilter">المشروع</label>
-          <select id="projectFilter">
-            <option value="all">كل المشاريع</option>
-          </select>
-        </div>
-        <div class="field">
-          <label for="searchText">بيانات البحث</label>
-          <input id="searchText" placeholder="اسم الموظف أو الرقم القومي أو الكود الوظيفي" autocomplete="off">
-        </div>
+        <div class="field"><label>المشروع</label><select id="projectFilter"><option value="all">كل المشاريع</option></select></div>
+        <div class="field"><label>بيانات البحث</label><input id="searchText" placeholder="اسم الموظف أو الرقم القومي" autocomplete="off"></div>
       </div>
-      <div class="searchactions" style="margin-top:13px">
+      <div class="searchactions">
         <button id="searchBtn" class="btn" onclick="searchEmployees()">بحث عن الموظف</button>
         <button class="btn light" onclick="clearSearch()">مسح البحث</button>
       </div>
@@ -423,534 +121,382 @@
     </section>
 
     <section id="resultsPanel" class="card hidden">
-      <div class="results-head">
-        <h2>نتائج البحث</h2>
-        <span id="resultCount" class="count">0 نتيجة</span>
-      </div>
+      <div class="results-head"><h2>نتائج البحث</h2><span id="resultCount" class="count">0 نتيجة</span></div>
       <div id="employeeResults" class="results"></div>
     </section>
 
     <section id="historyPanel" class="card hidden">
       <div class="sectionbar">
         <div class="heading" style="margin-bottom:15px">
-          <div class="num">02</div>
-          <div>
-            <h2>ملف الموظف</h2>
-            <p>البيانات الأساسية وحالة مهمات الوقاية وسجل الاستلام.</p>
-          </div>
+          <div class="num">02</div><div><h2>ملف الموظف</h2><p>البيانات الأساسية، المهمات، وسجل المخالفات.</p></div>
         </div>
         <button class="btn light" onclick="closeEmployee()">إغلاق الملف</button>
       </div>
+      
       <div id="employeeDetails" class="details"></div>
-      <h3 class="subhead">حالة مهمات الوقاية المسجلة في الريجيستر</h3>
+      
+      <h3 class="subhead">حالة مهمات الوقاية بالريجيستر</h3>
       <div id="initialPPE" class="ppegrid"></div>
+      
       <h3 class="subhead">سجل صرف المهمات الإضافية</h3>
-      <div id="historyContent" class="tablewrap">
-        <div class="empty">اختر موظفًا لعرض السجل.</div>
-      </div>
+      <div id="historyContent" class="tablewrap"><div class="empty">جاري التحميل...</div></div>
+      
+      <h3 class="subhead red">سجل مخالفات الموظف (HSE Violations)</h3>
+      <div id="violationsContent" class="tablewrap"><div class="empty">جاري التحميل...</div></div>
+
       <div class="issuebottom">
-        <div class="hint">إذا كانت حالة المهمة DN في الريجيستر، فستظهر باعتبارها مستلمة.</div>
-        <button class="btn" onclick="openIssueForm()">＋ إضافة مهمات وقاية</button>
+        <div class="hint">إجراءات الموظف السريعة:</div>
+        <div style="display:flex; gap: 10px; flex-wrap: wrap;">
+          <button class="btn red" onclick="openViolationForm()">⚠️ تحرير مخالفة</button>
+          <button class="btn" onclick="openIssueForm()">＋ إضافة مهمات</button>
+        </div>
       </div>
+    </section>
+
+    <section id="violationPanel" class="card hidden">
+      <div class="heading">
+        <div class="num" style="color: #dc3545; background: #fdf1f2;">03</div>
+        <div><h2>تحرير مخالفة (HSE Violation)</h2><p>الرجاء تأكيد رقم PIN الخاص بالمخالفات لفتح النموذج.</p></div>
+      </div>
+      <div id="violationEmployeeSummary" class="status"></div>
+      
+      <div class="accessbox">
+        <div id="violationAuthSection" class="accessgrid" style="grid-template-columns: 1fr auto;">
+          <div class="field"><label>أدخل الرقم السري للمخالفات (PIN - 3 أرقام)</label><input id="violationPin" type="password" placeholder="***"></div>
+          <button id="verifyViolationBtn" class="btn red" onclick="verifyViolationPin()">تحقق لفتح النموذج</button>
+        </div>
+        
+        <div id="violationFormSection" class="hidden">
+          <div class="field" style="margin-top: 15px;">
+            <label>اسم المشروع (تم التأكيد تلقائياً)</label>
+            <input id="violationProject" type="text" disabled>
+          </div>
+          
+          <div class="accessgrid" style="grid-template-columns: 1fr 1fr; margin-top: 15px;">
+            <div class="field"><label>اسم محرر المخالفة (HSE Name)</label><input id="violationHseName" type="text" placeholder="اسم المهندس"></div>
+            <div class="field"><label>صورة المخالفة (إجباري)</label><input id="violationImage" type="file" accept="image/*" style="padding-top: 10px;"></div>
+          </div>
+
+          <div class="field" style="margin-top: 15px;">
+            <label>وصف المخالفة</label>
+            <textarea id="violationDescription" rows="4" placeholder="اكتب تفاصيل المخالفة هنا..."></textarea>
+          </div>
+          
+          <div class="issuebottom">
+            <div class="hint">سيتم إنشاء ملف PDF وتوثيق المخالفة بشكل نهائي.</div>
+            <button id="submitViolationBtn" class="btn red" onclick="submitViolationForm()">إصدار المخالفة</button>
+          </div>
+        </div>
+      </div>
+      <div id="violationStatus" class="status hidden"></div>
     </section>
 
     <section id="issuePanel" class="card hidden">
       <div class="heading">
-        <div class="num">03</div>
-        <div>
-          <h2>إضافة مهمات وقاية</h2>
-          <p>اختر جهة الصرف، ثم تحقق من صلاحية المشروع قبل تحديد المهمات.</p>
-        </div>
+        <div class="num">04</div><div><h2>إضافة مهمات وقاية</h2><p>تحقق من صلاحية المشروع لإضافة المهمات.</p></div>
       </div>
       <div id="issueEmployeeSummary" class="status"></div>
       <div class="accessbox">
         <div class="accessgrid">
-          <div class="field">
-            <label for="issuingProject">المشروع الذي سيتم الصرف منه</label>
-            <select id="issuingProject">
-              <option value="">اختر مشروع الصرف</option>
-            </select>
-          </div>
-          <div class="field">
-            <label for="projectPassword">كلمة مرور المشروع</label>
-            <input id="projectPassword" type="password" placeholder="أدخل كلمة المرور" autocomplete="new-password">
-          </div>
-          <button id="verifyBtn" class="btn" onclick="verifyProject()">تأكد من الصلاحية</button>
+          <div class="field"><label>مشروع الصرف</label><select id="issuingProject"><option value="">اختر مشروع الصرف</option></select></div>
+          <div class="field"><label>كلمة مرور المشروع (صرف المهمات)</label><input id="projectPassword" type="password" placeholder="أدخل كلمة المرور"></div>
+          <button id="verifyBtn" class="btn" onclick="verifyProject()">تحقق</button>
         </div>
-        <div id="approvalStatus" class="approval pending">بانتظار التحقق من صلاحية المشروع.</div>
+        <div id="approvalStatus" class="approval pending">بانتظار التحقق...</div>
       </div>
       <div id="itemsSection" class="hidden">
         <h3 class="subhead">حدد المهمات المطلوب تسليمها</h3>
         <div id="issueItems" class="issuechoices"></div>
-        <div class="issuebottom">
-          <div class="hint">راجع اسم الموظف والمشروع والمهمات قبل تأكيد التسجيل.</div>
-          <button id="submitIssueBtn" class="btn" onclick="submitIssue()">تأكيد تسجيل الصرف</button>
-        </div>
+        <div class="issuebottom"><button id="submitIssueBtn" class="btn" onclick="submitIssue()">تأكيد الصرف</button></div>
       </div>
       <div id="issueStatus" class="status hidden"></div>
     </section>
-
-    <div class="footer">Rowad Modern Engineering · HSE Department · PPE & Employee Records</div>
   </main>
 
   <script>
-    let appInfo = null, selectedEmployee = null, approvedProject = '', isSaving = false;
+    let selectedEmployee = null, approvedProject = '', isSaving = false;
+    let currentViolationImageBase64 = null;
     
-    // رابط النشر الخاص بالاسكريبت
+    // رابط النشر الخاص بجوجل سكريبت
     const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxoQcMYAQNy8pkMiBfuYF6tYsDL5OgppNCqKkrFDgz51iyZpBb9dLv2sPTZdL240kl2/exec';
     
-    const PPE_ITEMS = [
-      ['Safety Shoes', 'حذاء السلامة'],
-      ['Vest', 'الفيست'],
-      ['Safety Helmet', 'خوذة السلامة'],
-      ['Safety Glasses', 'نظارة السلامة'],
-      ['Gloves', 'الجوانتي']
-    ];
+    const PPE_ITEMS = [['Safety Shoes', 'حذاء السلامة'], ['Vest', 'الفيست'], ['Safety Helmet', 'خوذة السلامة'], ['Safety Glasses', 'نظارة السلامة'], ['Gloves', 'الجوانتي']];
 
     function el(id) { return document.getElementById(id); }
-
-    function setStatus(id, message, type) {
-      const node = el(id);
-      node.textContent = message;
-      node.className = 'status' + (type ? ' ' + type : '');
-    }
-
+    function setStatus(id, message, type) { const node = el(id); node.textContent = message; node.className = 'status' + (type ? ' ' + type : ''); node.classList.remove('hidden'); }
     function safeText(v) { return String(v == null ? '' : v); }
+    function makeDetail(label, value) { const box = document.createElement('div'); box.className = 'detail'; box.innerHTML = `<div class="dlabel">${label}</div><div class="dvalue">${value || '—'}</div>`; return box; }
 
-    function received(v) {
-      const s = safeText(v).trim().toUpperCase();
-      return ['DN', 'YES', 'Y', 'TRUE', '1', 'RECEIVED', 'استلم', 'تم الاستلام', 'نعم'].includes(s);
-    }
-
-    function itemState(v) {
-      return '<span class="state ' + (received(v) ? 'received' : 'notreceived') + '">' + (received(v) ? 'مستلم' : 'لم يستلم') + '</span>';
-    }
-
-    function makeDetail(label, value) {
-      const box = document.createElement('div');
-      box.className = 'detail';
-      const l = document.createElement('div');
-      l.className = 'dlabel';
-      l.textContent = label;
-      const v = document.createElement('div');
-      v.className = 'dvalue';
-      v.textContent = value || '—';
-      box.append(l, v);
-      return box;
-    }
-
-    // GitHub Pages -> Google Apps Script transport (avoids browser CORS fetch blocking)
-    // Apps Script doPost must accept a form field named "payload" and return an HTML
-    // response that calls window.top.postMessage({ channel, requestId, payload }, '*').
+    // دالة fetchApi المخصصة للاتصال بين جيت هاب و جوجل سكريبت
     function fetchApi(action, params = {}) {
       return new Promise((resolve, reject) => {
         const requestId = 'ppe_' + Date.now() + '_' + Math.random().toString(36).slice(2);
         const iframeName = 'ppe_api_frame_' + requestId.replace(/[^a-zA-Z0-9_]/g, '_');
         const iframe = document.createElement('iframe');
-        iframe.name = iframeName;
-        iframe.title = 'PPE API transport';
-        iframe.style.display = 'none';
-
+        iframe.name = iframeName; iframe.title = 'PPE API transport'; iframe.style.display = 'none';
+        
         const form = document.createElement('form');
-        form.method = 'POST';
-        form.action = SCRIPT_URL;
-        form.target = iframeName;
-        form.acceptCharset = 'UTF-8';
-        form.style.display = 'none';
-
+        form.method = 'POST'; form.action = SCRIPT_URL; form.target = iframeName; form.acceptCharset = 'UTF-8'; form.style.display = 'none';
+        
         const payloadInput = document.createElement('input');
-        payloadInput.type = 'hidden';
-        payloadInput.name = 'payload';
-        payloadInput.value = JSON.stringify({
-          requestId: requestId,
-          action: action,
-          params: params
-        });
+        payloadInput.type = 'hidden'; payloadInput.name = 'payload';
+        payloadInput.value = JSON.stringify({ requestId: requestId, action: action, params: params });
         form.appendChild(payloadInput);
 
         let settled = false;
-        const cleanup = () => {
-          window.removeEventListener('message', onMessage);
-          clearTimeout(timeoutId);
-          form.remove();
-          iframe.remove();
-        };
-        const finish = (callback, value) => {
-          if (settled) return;
-          settled = true;
-          cleanup();
-          callback(value);
-        };
+        const cleanup = () => { window.removeEventListener('message', onMessage); clearTimeout(timeoutId); form.remove(); iframe.remove(); };
+        const finish = (callback, value) => { if (settled) return; settled = true; cleanup(); callback(value); };
+        
         const onMessage = event => {
           const message = event.data;
           if (!message || message.channel !== 'PPE_API' || message.requestId !== requestId) return;
           const data = message.payload;
-          if (!data || data.success !== true) {
-            finish(reject, new Error((data && data.error) || 'استجابة غير صحيحة من الخادم.'));
-            return;
-          }
+          if (!data || data.success !== true) { finish(reject, new Error((data && data.error) || 'استجابة غير صحيحة.')); return; }
           finish(resolve, data.result);
         };
-        const timeoutId = setTimeout(() => {
-          finish(reject, new Error('انتهت مهلة الاتصال. تأكد من نشر Google Apps Script كتطبيق ويب وإتاحة الوصول له.'));
-        }, 30000);
-
-        window.addEventListener('message', onMessage);
-        document.body.append(iframe, form);
-        form.submit();
+        const timeoutId = setTimeout(() => { finish(reject, new Error('انتهت مهلة الاتصال.')); }, 35000);
+        
+        window.addEventListener('message', onMessage); document.body.append(iframe, form); form.submit();
       });
     }
 
     function loadApp() {
       fetchApi('getPPEAppInfo')
         .then(info => {
-          appInfo = info;
-          (info.projects || []).forEach(project => {
-            let o = document.createElement('option');
-            o.value = project;
-            o.textContent = project;
-            el('projectFilter').appendChild(o);
-            let i = document.createElement('option');
-            i.value = project;
-            i.textContent = project;
-            el('issuingProject').appendChild(i);
+          (info.projects || []).forEach(p => {
+            el('projectFilter').appendChild(new Option(p, p));
+            el('issuingProject').appendChild(new Option(p, p));
           });
-          renderIssueItems();
-          setStatus('searchStatus', 'تم الاتصال بقاعدة البيانات. حدد المشروع وابدأ البحث.');
+          el('issueItems').replaceChildren();
+          PPE_ITEMS.forEach(([key, label]) => {
+            const l = document.createElement('label'); l.className = 'choice';
+            l.innerHTML = `<input type="checkbox" value="${key}" disabled><span>${label}</span>`;
+            el('issueItems').appendChild(l);
+          });
+          setStatus('searchStatus', 'جاهز للبحث.');
         })
-        .catch(err => setStatus('searchStatus', 'تعذر الاتصال بالخادم: ' + err.message, 'error'));
+        .catch(err => setStatus('searchStatus', 'خطأ بالاتصال: ' + err.message, 'error'));
     }
 
     function searchEmployees() {
       const q = el('searchText').value.trim();
-      const project = el('projectFilter').value;
+      const proj = el('projectFilter').value;
       el('searchBtn').disabled = true;
-      setStatus('searchStatus', 'جاري البحث عن الموظفين...');
+      setStatus('searchStatus', 'جاري البحث...');
       
-      fetchApi('searchPPEEmployees', { searchText: q, projectFilter: project })
+      fetchApi('searchPPEEmployees', { searchText: q, projectFilter: proj })
         .then(result => {
           el('searchBtn').disabled = false;
-          el('historyPanel').classList.add('hidden');
-          el('issuePanel').classList.add('hidden');
+          el('historyPanel').classList.add('hidden'); el('issuePanel').classList.add('hidden'); el('violationPanel').classList.add('hidden');
           el('resultsPanel').classList.remove('hidden');
-          const box = el('employeeResults');
-          box.replaceChildren();
+          const box = el('employeeResults'); box.replaceChildren();
           
-          if (!result.success) {
-            setStatus('searchStatus', result.message, 'error');
-            return;
+          if (!result || !result.employees || !result.employees.length) {
+            box.innerHTML = '<div class="empty">لا توجد نتائج مطابقة.</div>';
+            setStatus('searchStatus', 'لا توجد نتائج.'); return;
           }
           
           el('resultCount').textContent = result.count + ' نتيجة';
-          
-          if (!result.employees.length) {
-            box.innerHTML = '<div class="empty">لا توجد نتائج مطابقة. جرّب تعديل بيانات البحث أو اختيار مشروع آخر.</div>';
-            setStatus('searchStatus', 'لم يتم العثور على موظفين مطابقين.');
-            return;
-          }
-          
           result.employees.forEach(emp => {
-            const card = document.createElement('article');
-            card.className = 'emp';
-            const name = document.createElement('div');
-            name.className = 'empname';
-            name.textContent = emp.name;
-            const meta = document.createElement('div');
-            meta.className = 'empmeta';
-            meta.textContent = 'المشروع الأصلي: ' + (emp.originalProject || '—') + '\nالمهنة: ' + (emp.jobTitle || '—') + '\nالرقم التعريفي: ' + (emp.employeeId || '—');
-            meta.style.whiteSpace = 'pre-line';
-            const foot = document.createElement('div');
-            foot.className = 'empfoot';
-            const pill = document.createElement('span');
-            pill.className = 'pill';
-            pill.textContent = emp.company || 'بيانات الموظف';
-            const btn = document.createElement('button');
-            btn.className = 'btn';
-            btn.textContent = 'عرض الملف';
-            btn.addEventListener('click', () => showEmployee(emp));
-            foot.append(pill, btn);
-            card.append(name, meta, foot);
-            box.appendChild(card);
+            const card = document.createElement('article'); card.className = 'emp';
+            card.innerHTML = `<div class="empname">${emp.name}</div><div class="empmeta">المشروع: ${emp.originalProject || '—'}<br>المهنة: ${emp.jobTitle || '—'}<br>الكود: ${emp.employeeId}</div>`;
+            const foot = document.createElement('div'); foot.className = 'empfoot';
+            foot.innerHTML = `<span class="pill">${emp.company || '—'}</span>`;
+            const btn = document.createElement('button'); btn.className = 'btn'; btn.textContent = 'عرض الملف';
+            btn.onclick = () => showEmployee(emp);
+            foot.appendChild(btn); card.appendChild(foot); box.appendChild(card);
           });
-          
-          setStatus('searchStatus', 'تم العثور على ' + result.count + ' نتيجة' + (result.count === 100 ? ' — تم عرض أول 100 نتيجة.' : '.'));
+          setStatus('searchStatus', 'تم إيجاد ' + result.count + ' نتيجة.');
         })
-        .catch(err => {
-          el('searchBtn').disabled = false;
-          setStatus('searchStatus', 'فشل البحث: ' + err.message, 'error');
-        });
+        .catch(err => { el('searchBtn').disabled = false; setStatus('searchStatus', err.message, 'error'); });
     }
 
     function clearSearch() {
-      el('searchText').value = '';
-      el('projectFilter').value = 'all';
-      el('resultsPanel').classList.add('hidden');
-      el('historyPanel').classList.add('hidden');
-      el('issuePanel').classList.add('hidden');
-      selectedEmployee = null;
-      setStatus('searchStatus', 'تم مسح البحث. حدد المشروع واكتب بيانات الموظف للبحث من جديد.');
-      el('searchText').focus();
+      el('searchText').value = ''; el('projectFilter').value = 'all'; selectedEmployee = null;
+      document.querySelectorAll('.card:not(:first-child)').forEach(c => c.classList.add('hidden'));
+      setStatus('searchStatus', 'تم مسح البحث.');
     }
 
     function showEmployee(emp) {
       selectedEmployee = emp;
-      el('issuePanel').classList.add('hidden');
-      el('historyPanel').classList.remove('hidden');
+      el('issuePanel').classList.add('hidden'); el('violationPanel').classList.add('hidden');
+      el('historyPanel').classList.remove('hidden'); el('historyPanel').scrollIntoView({ behavior: 'smooth' });
       
-      const details = el('employeeDetails');
-      details.replaceChildren();
+      const details = el('employeeDetails'); details.replaceChildren();
+      [['الاسم', emp.name], ['الكود', emp.employeeId], ['الرقم القومي', emp.nationalIdOrCode], ['المشروع', emp.originalProject], ['الشركة', emp.company], ['المهنة', emp.jobTitle], ['تاريخ التسجيل', emp.initialIssueTimestamp]].forEach(p => details.appendChild(makeDetail(p[0], p[1])));
       
-      [['اسم الموظف', emp.name], ['الرقم التعريفي', emp.employeeId], ['الرقم القومي / الكود الوظيفي', emp.nationalIdOrCode], ['المشروع الأصلي', emp.originalProject], ['الشركة', emp.company], ['المهنة', emp.jobTitle], ['تصنيف المهنة', emp.jobCategory], ['رقم الهاتف', emp.phone], ['تاريخ التسجيل الأول', emp.initialIssueTimestamp]].forEach(p => details.appendChild(makeDetail(p[0], p[1])));
-      
-      const ppe = el('initialPPE');
-      ppe.replaceChildren();
-      
+      el('initialPPE').replaceChildren();
       PPE_ITEMS.forEach(([key, label]) => {
-        const box = document.createElement('div');
-        box.className = 'ppebox';
-        const n = document.createElement('div');
-        n.className = 'itemname';
-        n.textContent = label;
-        const val = document.createElement('div');
-        const value = emp.initialPPE ? emp.initialPPE[{ 'Safety Shoes': 'safetyShoes', 'Vest': 'vest', 'Safety Helmet': 'safetyHelmet', 'Safety Glasses': 'safetyGlasses', 'Gloves': 'gloves' }[key]] : '';
-        val.innerHTML = itemState(value);
-        box.append(n, val);
-        ppe.appendChild(box);
+        const val = emp.initialPPE ? emp.initialPPE[{'Safety Shoes':'safetyShoes', 'Vest':'vest', 'Safety Helmet':'safetyHelmet', 'Safety Glasses':'safetyGlasses', 'Gloves':'gloves'}[key]] : '';
+        const isRec = ['DN','YES','Y','TRUE','1','RECEIVED','استلم','نعم'].includes(String(val).trim().toUpperCase());
+        const box = document.createElement('div'); box.className = 'ppebox';
+        box.innerHTML = `<div class="itemname">${label}</div><span class="state ${isRec ? 'received' : 'notreceived'}">${isRec ? 'مستلم' : 'لم يستلم'}</span>`;
+        el('initialPPE').appendChild(box);
       });
       
       el('historyContent').innerHTML = '<div class="empty">جاري تحميل سجل الصرف...</div>';
+      el('violationsContent').innerHTML = '<div class="empty">جاري تحميل سجل المخالفات...</div>';
       
       fetchApi('getPPEEmployeeHistory', { employeeId: emp.employeeId, employeeName: emp.name, originalProject: emp.originalProject })
         .then(renderHistory)
-        .catch(err => {
-          el('historyContent').textContent = 'تعذر تحميل السجل: ' + err.message;
-        });
+        .catch(err => el('historyContent').innerHTML = `<div class="empty" style="color:var(--red)">تعذر التحميل: ${err.message}</div>`);
         
-      el('historyPanel').scrollIntoView({ behavior: 'smooth', block: 'start' });
+      fetchApi('getEmployeeViolations', { employeeId: emp.employeeId, originalProject: emp.originalProject })
+        .then(renderViolations)
+        .catch(err => el('violationsContent').innerHTML = `<div class="empty" style="color:var(--red)">تعذر التحميل: ${err.message}</div>`);
     }
 
     function renderHistory(records) {
-      const c = el('historyContent');
-      c.replaceChildren();
-      
-      if (!records || !records.length) {
-        c.innerHTML = '<div class="empty">لا توجد عمليات صرف إضافية مسجلة لهذا الموظف.</div>';
-        return;
-      }
-      
-      const headers = ['Timestamp', 'Issuing Project', 'Safety Shoes', 'Vest', 'Safety Helmet', 'Safety Glasses', 'Gloves', 'Recorded By'];
-      const labels = {
-        'Timestamp': 'التاريخ والوقت',
-        'Issuing Project': 'مشروع الصرف',
-        'Safety Shoes': 'حذاء السلامة',
-        'Vest': 'الفيست',
-        'Safety Helmet': 'الخوذة',
-        'Safety Glasses': 'النظارة',
-        'Gloves': 'الجوانتي',
-        'Recorded By': 'مسجل العملية'
-      };
+      const c = el('historyContent'); c.replaceChildren();
+      if (!records || !records.length) { c.innerHTML = '<div class="empty">لا توجد عمليات صرف مسجلة.</div>'; return; }
+      let html = '<table><thead><tr><th>التاريخ والوقت</th><th>مشروع الصرف</th><th>الحذاء</th><th>الفيست</th><th>الخوذة</th><th>النظارة</th><th>الجوانتي</th><th>المسجل</th></tr></thead><tbody>';
+      records.forEach(r => {
+        html += `<tr><td>${safeText(r['Timestamp'])}</td><td>${safeText(r['Issuing Project'])}</td><td>${safeText(r['Safety Shoes'])}</td><td>${safeText(r['Vest'])}</td><td>${safeText(r['Safety Helmet'])}</td><td>${safeText(r['Safety Glasses'])}</td><td>${safeText(r['Gloves'])}</td><td>${safeText(r['Recorded By'])}</td></tr>`;
+      });
+      c.innerHTML = html + '</tbody></table>';
+    }
+
+    function renderViolations(records) {
+      const c = el('violationsContent'); c.replaceChildren();
+      if (!records || !records.length) { c.innerHTML = '<div class="empty">لا توجد مخالفات مسجلة لهذا العامل.</div>'; return; }
       
       const table = document.createElement('table');
-      const thead = document.createElement('thead');
-      const trh = document.createElement('tr');
-      
-      headers.forEach(h => {
-        const th = document.createElement('th');
-        th.textContent = labels[h];
-        trh.appendChild(th);
-      });
-      
-      thead.appendChild(trh);
-      table.appendChild(thead);
-      
-      const body = document.createElement('tbody');
+      table.innerHTML = '<thead><tr><th>التاريخ</th><th>الوقت</th><th>اسم المحرر</th><th>الوصف</th><th>ملف PDF</th><th>إجراء</th></tr></thead>';
+      const tbody = document.createElement('tbody');
       
       records.forEach(r => {
         const tr = document.createElement('tr');
-        headers.forEach(h => {
-          const td = document.createElement('td');
-          td.textContent = safeText(r[h]) || '—';
-          tr.appendChild(td);
+        tr.innerHTML = `<td>${safeText(r.date)}</td><td>${safeText(r.time)}</td><td>${safeText(r.hse)}</td><td style="max-width:200px; white-space:normal;">${safeText(r.desc)}</td>
+                        <td><a href="${r.url}" target="_blank" style="color:var(--green); font-weight:bold;">عرض الملف</a></td>`;
+        
+        const tdAction = document.createElement('td');
+        const delBtn = document.createElement('button');
+        delBtn.className = 'btn ghost-red'; delBtn.textContent = 'حذف';
+        delBtn.onclick = () => promptDeleteViolation(r.rowIndex, selectedEmployee.originalProject);
+        tdAction.appendChild(delBtn); tr.appendChild(tdAction);
+        tbody.appendChild(tr);
+      });
+      table.appendChild(tbody); c.appendChild(table);
+    }
+
+    function promptDeleteViolation(rowIndex, projectName) {
+      const pwd = prompt('لتأكيد الحذف، أدخل كلمة مرور (صرف المهمات) الخاصة بمشروع ' + projectName + ' :');
+      if (!pwd) return;
+      
+      el('violationsContent').innerHTML = '<div class="empty">جاري الحذف...</div>';
+      
+      fetchApi('deleteViolationRecord', { employeeId: selectedEmployee.employeeId, projectName: projectName, pwd: pwd, rowIndex: rowIndex })
+        .then(res => { alert(res.message); showEmployee(selectedEmployee); })
+        .catch(err => { alert('خطأ: ' + err.message); showEmployee(selectedEmployee); });
+    }
+
+    function closeEmployee() { el('historyPanel').classList.add('hidden'); el('issuePanel').classList.add('hidden'); el('violationPanel').classList.add('hidden'); }
+
+    // Logic الخاص بالمخالفات
+    el('violationImage').addEventListener('change', e => {
+      const file = e.target.files[0]; if (!file) return;
+      const reader = new FileReader();
+      reader.onload = ev => { currentViolationImageBase64 = ev.target.result; };
+      reader.readAsDataURL(file);
+    });
+
+    function openViolationForm() {
+      if (!selectedEmployee) return;
+      el('issuePanel').classList.add('hidden');
+      el('violationEmployeeSummary').textContent = 'الموظف: ' + selectedEmployee.name + ' | المشروع: ' + selectedEmployee.originalProject;
+      el('violationFormSection').classList.add('hidden');
+      el('violationAuthSection').classList.remove('hidden');
+      el('violationPin').value = '';
+      el('violationStatus').classList.add('hidden');
+      el('violationPanel').classList.remove('hidden'); el('violationPanel').scrollIntoView({ behavior: 'smooth' });
+    }
+
+    function verifyViolationPin() {
+      const pin = el('violationPin').value;
+      if (!pin) { alert("أدخل الـ PIN أولاً."); return; }
+      el('verifyViolationBtn').disabled = true; el('verifyViolationBtn').textContent = 'جاري...';
+      
+      fetchApi('verifyViolationPinAccess', { pin: pin })
+        .then(res => {
+          el('verifyViolationBtn').disabled = false; el('verifyViolationBtn').textContent = 'تحقق لفتح النموذج';
+          el('violationAuthSection').classList.add('hidden');
+          el('violationFormSection').classList.remove('hidden');
+          el('violationProject').value = res.project;
+          el('violationHseName').value = ''; el('violationDescription').value = ''; el('violationImage').value = ''; currentViolationImageBase64 = null;
+        })
+        .catch(err => {
+          el('verifyViolationBtn').disabled = false; el('verifyViolationBtn').textContent = 'تحقق لفتح النموذج';
+          alert(err.message);
         });
-        body.appendChild(tr);
-      });
+    }
+
+    function submitViolationForm() {
+      if (isSaving) return;
+      const project = el('violationProject').value, desc = el('violationDescription').value, hse = el('violationHseName').value;
+      if (!desc || !currentViolationImageBase64 || !hse) { setStatus('violationStatus', 'أكمل جميع الحقول وأرفق الصورة.', 'error'); return; }
       
-      table.appendChild(body);
-      c.appendChild(table);
-    }
-
-    function closeEmployee() {
-      el('historyPanel').classList.add('hidden');
-      closeIssueForm();
-    }
-
-    function renderIssueItems() {
-      const c = el('issueItems');
-      c.replaceChildren();
+      isSaving = true; el('submitViolationBtn').disabled = true; el('submitViolationBtn').textContent = 'جاري إنشاء المخالفة...';
       
-      PPE_ITEMS.forEach(([key, label], i) => {
-        const l = document.createElement('label');
-        l.className = 'choice';
-        const cb = document.createElement('input');
-        cb.type = 'checkbox';
-        cb.id = 'issueItem' + i;
-        cb.value = key;
-        cb.disabled = true;
-        const span = document.createElement('span');
-        span.textContent = label;
-        l.append(cb, span);
-        c.appendChild(l);
-      });
+      fetchApi('recordViolation', { request: { project: project, employee: selectedEmployee, description: desc, hseName: hse, imageDataUrl: currentViolationImageBase64 } })
+        .then(res => {
+          isSaving = false; el('submitViolationBtn').disabled = false; el('submitViolationBtn').textContent = 'إصدار المخالفة';
+          setStatus('violationStatus', res.message, 'good');
+          setTimeout(() => { el('violationPanel').classList.add('hidden'); showEmployee(selectedEmployee); }, 2000);
+        })
+        .catch(err => {
+          isSaving = false; el('submitViolationBtn').disabled = false; el('submitViolationBtn').textContent = 'إصدار المخالفة';
+          setStatus('violationStatus', 'خطأ: ' + err.message, 'error');
+        });
     }
 
+    // Logic الخاص بتسليم المهمات
     function openIssueForm() {
       if (!selectedEmployee) return;
-      closeIssueForm(false);
-      el('issueEmployeeSummary').textContent = 'الموظف: ' + selectedEmployee.name + ' | الكود: ' + selectedEmployee.employeeId + ' | المشروع الأصلي: ' + selectedEmployee.originalProject;
-      el('issuePanel').classList.remove('hidden');
-      el('issuePanel').scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }
-
-    function closeIssueForm(hide = true) {
-      if (hide) el('issuePanel').classList.add('hidden');
-      approvedProject = '';
-      el('projectPassword').value = '';
-      el('issuingProject').value = '';
-      el('itemsSection').classList.add('hidden');
-      el('approvalStatus').className = 'approval pending';
-      el('approvalStatus').textContent = 'بانتظار التحقق من صلاحية المشروع.';
-      el('issueStatus').classList.add('hidden');
-      el('verifyBtn').disabled = false;
-      el('verifyBtn').textContent = 'تأكد من الصلاحية';
-      document.querySelectorAll('#issueItems input').forEach(cb => {
-        cb.checked = false;
-        cb.disabled = true;
-      });
+      el('violationPanel').classList.add('hidden');
+      el('issueEmployeeSummary').textContent = 'الموظف: ' + selectedEmployee.name;
+      el('issuingProject').value = ''; el('projectPassword').value = ''; el('itemsSection').classList.add('hidden');
+      el('approvalStatus').className = 'approval pending'; el('approvalStatus').textContent = 'بانتظار التحقق...';
+      el('issuePanel').classList.remove('hidden'); el('issuePanel').scrollIntoView({ behavior: 'smooth' });
     }
 
     function verifyProject() {
-      const project = el('issuingProject').value;
-      const password = el('projectPassword').value;
+      const proj = el('issuingProject').value, pwd = el('projectPassword').value;
+      if (!proj || !pwd) { el('approvalStatus').className = 'approval denied'; el('approvalStatus').textContent = 'أدخل البيانات.'; return; }
+      el('verifyBtn').disabled = true; el('verifyBtn').textContent = 'جاري...';
       
-      if (!project || !password) {
-        el('approvalStatus').className = 'approval denied';
-        el('approvalStatus').textContent = 'اختر مشروع الصرف وأدخل كلمة المرور أولًا.';
-        return;
-      }
-      
-      el('verifyBtn').disabled = true;
-      el('verifyBtn').textContent = 'جاري التحقق...';
-      el('itemsSection').classList.add('hidden');
-      approvedProject = '';
-      
-      fetchApi('validatePPEProjectAccess', { projectName: project, password: password })
-        .then(result => {
-          el('verifyBtn').disabled = false;
-          el('verifyBtn').textContent = 'إعادة التحقق';
-          approvedProject = result.project;
-          el('approvalStatus').className = 'approval approved';
-          el('approvalStatus').textContent = 'APPROVED — تم التحقق من صلاحية الصرف للمشروع: ' + result.project;
+      fetchApi('validatePPEProjectAccess', { projectName: proj, password: pwd })
+        .then(res => {
+          el('verifyBtn').disabled = false; el('verifyBtn').textContent = 'تحقق';
+          approvedProject = res.project;
+          el('approvalStatus').className = 'approval approved'; el('approvalStatus').textContent = 'تم التحقق.';
           el('itemsSection').classList.remove('hidden');
           document.querySelectorAll('#issueItems input').forEach(cb => cb.disabled = false);
-          setStatus('issueStatus', 'تم اعتماد صلاحية المشروع. اختر المهمات ثم أكد التسجيل.', 'good');
-          el('issueStatus').classList.remove('hidden');
         })
         .catch(err => {
-          el('verifyBtn').disabled = false;
-          el('verifyBtn').textContent = 'تأكد من الصلاحية';
-          el('approvalStatus').className = 'approval denied';
-          el('approvalStatus').textContent = 'غير معتمد — ' + err.message;
-          approvedProject = '';
+          el('verifyBtn').disabled = false; el('verifyBtn').textContent = 'تحقق';
+          el('approvalStatus').className = 'approval denied'; el('approvalStatus').textContent = err.message;
         });
     }
 
     function submitIssue() {
       if (isSaving) return;
-      if (!selectedEmployee) {
-        setStatus('issueStatus', 'اختار موظفًا أولًا.', 'error');
-        el('issueStatus').classList.remove('hidden');
-        return;
-      }
+      const items = {}; document.querySelectorAll('#issueItems input').forEach(cb => items[cb.value] = cb.checked);
+      if (!Object.values(items).some(Boolean)) { alert('حدد مهمة واحدة على الأقل.'); return; }
       
-      const project = el('issuingProject').value;
-      const password = el('projectPassword').value;
+      isSaving = true; el('submitIssueBtn').disabled = true; el('submitIssueBtn').textContent = 'جاري...';
       
-      if (!approvedProject || approvedProject !== project) {
-        setStatus('issueStatus', 'يجب التحقق من صلاحية المشروع أولًا.', 'error');
-        el('issueStatus').classList.remove('hidden');
-        return;
-      }
-      
-      const items = {};
-      document.querySelectorAll('#issueItems input').forEach(cb => items[cb.value] = cb.checked);
-      
-      if (!Object.values(items).some(Boolean)) {
-        setStatus('issueStatus', 'حدد مهمة واحدة على الأقل.', 'error');
-        el('issueStatus').classList.remove('hidden');
-        return;
-      }
-      
-      isSaving = true;
-      el('submitIssueBtn').disabled = true;
-      el('submitIssueBtn').textContent = 'جاري تسجيل الصرف...';
-      
-      fetchApi('recordAdditionalPPEIssue', {
-          request: {
-            employee: selectedEmployee,
-            issuingProject: project,
-            projectPassword: password,
-            items: items
-          }
-        })
-        .then(result => {
-          isSaving = false;
-          el('submitIssueBtn').disabled = false;
-          el('submitIssueBtn').textContent = 'تأكيد تسجيل الصرف';
-          setStatus('issueStatus', result.message + ' رقم العملية: ' + result.transactionId, 'good');
-          el('issueStatus').classList.remove('hidden');
-          el('projectPassword').value = '';
-          approvedProject = '';
-          el('approvalStatus').className = 'approval pending';
-          el('approvalStatus').textContent = 'تم التسجيل. تحقق مرة أخرى قبل تسجيل عملية جديدة.';
-          el('itemsSection').classList.add('hidden');
-          
-          const savedEmployee = selectedEmployee;
-          showEmployee(savedEmployee);
-          
-          el('issuePanel').classList.remove('hidden');
-          el('issuePanel').scrollIntoView({ behavior: 'smooth', block: 'start' });
-          setStatus('issueStatus', result.message + ' رقم العملية: ' + result.transactionId, 'good');
-          el('issueStatus').classList.remove('hidden');
+      fetchApi('recordAdditionalPPEIssue', { request: { employee: selectedEmployee, issuingProject: el('issuingProject').value, projectPassword: el('projectPassword').value, items: items } })
+        .then(res => {
+          isSaving = false; el('submitIssueBtn').disabled = false; el('submitIssueBtn').textContent = 'تأكيد الصرف';
+          alert(res.message); el('issuePanel').classList.add('hidden'); showEmployee(selectedEmployee);
         })
         .catch(err => {
-          isSaving = false;
-          el('submitIssueBtn').disabled = false;
-          el('submitIssueBtn').textContent = 'تأكيد تسجيل الصرف';
-          setStatus('issueStatus', 'تعذر تسجيل الصرف: ' + err.message, 'error');
-          el('issueStatus').classList.remove('hidden');
+          isSaving = false; el('submitIssueBtn').disabled = false; el('submitIssueBtn').textContent = 'تأكيد الصرف';
+          alert('خطأ: ' + err.message);
         });
     }
 
-    el('searchText').addEventListener('keydown', e => {
-      if (e.key === 'Enter') searchEmployees();
-    });
-    
-    el('issuingProject').addEventListener('change', () => {
-      approvedProject = '';
-      el('itemsSection').classList.add('hidden');
-      el('approvalStatus').className = 'approval pending';
-      el('approvalStatus').textContent = 'تم تغيير المشروع؛ يجب التحقق من الصلاحية مرة أخرى.';
-    });
-    
-    el('projectPassword').addEventListener('input', () => {
-      if (approvedProject) {
-        approvedProject = '';
-        el('itemsSection').classList.add('hidden');
-        el('approvalStatus').className = 'approval pending';
-        el('approvalStatus').textContent = 'تم تعديل كلمة المرور؛ أعد التحقق من الصلاحية.';
-      }
-    });
-
+    el('searchText').addEventListener('keydown', e => { if (e.key === 'Enter') searchEmployees(); });
     loadApp();
   </script>
 </body>
